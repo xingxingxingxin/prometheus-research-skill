@@ -27,6 +27,22 @@
 
 ---
 
+## 能力展示
+
+### 工作流程概览
+
+![Workflow Overview](assets/workflow_overview.png)
+
+### 实验结果展示
+
+![Experiment Results](assets/experiment_results.png)
+
+### 代码结构
+
+![Code Structure](assets/code_structure.png)
+
+---
+
 ## 工作原理
 
 此 Skill 会在**后台**执行所有研究任务，用户通过日志监控进度。
@@ -80,10 +96,10 @@ tail -f Logs/executor.log
 python scripts/start_research.py --topic "你的研究主题"
 
 # 2. 启动后台执行 (Windows)
-start /b pythonw scripts/automation/task_executor.py --project "Projects/项目名" --loop >> Logs/executor.log 2>&1
+start /b pythonw scripts/automation/task_executor.py --loop >> Logs/executor.log 2>&1
 
 # 2. 启动后台执行 (Linux/Mac)
-nohup python scripts/automation/task_executor.py --project "Projects/项目名" --loop >> Logs/executor.log 2>&1 &
+nohup python scripts/automation/task_executor.py --loop >> Logs/executor.log 2>&1 &
 
 # 3. 查看日志
 Get-Content Logs\executor.log -Wait -Tail 50   # Windows
@@ -138,6 +154,7 @@ pip install -r scripts/requirements.txt
 prometheus-research-skill/
 ├── SKILL.md                    # Claude Code Skill 定义
 ├── README.md
+├── assets/                     # 展示图片
 ├── config/
 │   └── execution_config.yaml   # 执行配置
 ├── scripts/
