@@ -1,0 +1,26 @@
+# Authors
+
+## Original Author
+
+**xingye**
+- WeChat: xingye4088
+- GitHub: https://github.com/xingxingxingxin
+
+## Copyright
+
+Copyright (c) 2026 xingye
+
+All rights reserved. This software is the original work of xingye.
+
+## Citation
+
+If you use this software in your research, please cite:
+
+```bibtex
+@software{prometheus_research_2026,
+  author = {xingye},
+  title = {Prometheus Research Skill - 全自主科研智能体},
+  year = {2026},
+  url = {https://github.com/xingxingxingxin/prometheus-research-skill}
+}
+```

@@ -2,6 +2,31 @@
 
 > 全自主科研智能体 - 后台执行，日志监控
 
+**原创作者: xingye**
+**微信: xingye4088**
+
+---
+
+## 原创声明
+
+本项目为 **xingye** 独立开发的原创作品，享有完整版权。
+
+- 版权所有 (c) 2026 xingye
+- 未经作者书面授权，禁止用于商业用途
+- 学术使用请保留作者署名
+
+引用请注明：
+```bibtex
+@software{prometheus_research_2026,
+  author = {xingye},
+  title = {Prometheus Research Skill - 全自主科研智能体},
+  year = {2026},
+  url = {https://github.com/xingxingxingxin/prometheus-research-skill}
+}
+```
+
+---
+
 ## 工作方式
 
 **后台执行 + 日志监控**
@@ -53,10 +78,12 @@ python scripts/prometheus.py --status
 
 ## 输出
 
+研究完成后，在 `Projects/{研究主题}/output/` 生成：
+
 ```
-Projects/{研究主题}/output/
+output/
 ├── paper_en.pdf        # 英文论文
-├── paper_zh.pdf        # 中文论文
+├── paper_zh.pdf        # 中文论文（可选）
 └── supplementary.zip   # 代码和数据
 ```
 
@@ -89,17 +116,24 @@ pip install -r scripts/requirements.txt
 prometheus-research-skill/
 ├── SKILL.md
 ├── README.md
+├── LICENSE
+├── AUTHORS
 ├── scripts/
-│   ├── run_background.bat/.sh   # 后台执行
-│   ├── monitor.bat/.sh          # 日志监控
-│   ├── prometheus.py            # 控制器
-│   ├── start_research.py        # 启动脚本
-│   ├── Core/                    # 核心模块
+│   ├── run_background.bat/.sh
+│   ├── monitor.bat/.sh
+│   ├── prometheus.py
+│   ├── start_research.py
 │   └── ...
 └── references/
-    └── workflow.md              # 工作流详情
+    └── workflow.md
 ```
+
+## 联系方式
+
+- **作者**: xingye
+- **微信**: xingye4088
+- **GitHub**: https://github.com/xingxingxingxin
 
 ---
 
-*后台执行模式*
+*版权所有 (c) 2026 xingye*
