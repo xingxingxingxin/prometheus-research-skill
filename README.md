@@ -28,16 +28,13 @@
 ---
 
 ## 能力展示
-
-### 工作流程概览
+这些是产出的论文初稿截图
 
 ![Workflow Overview](assets/workflow_overview.png)
 
-### 实验结果展示
 
 ![Experiment Results](assets/experiment_results.png)
 
-### 代码结构
 
 ![Code Structure](assets/code_structure.png)
 
