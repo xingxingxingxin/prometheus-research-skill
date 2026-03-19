@@ -22,11 +22,26 @@ description: |
 
 本 skill 包含完整的 Python 工具集，位于 `scripts/` 目录：
 
+### 后台执行与监控（推荐）
+
+| 脚本 | 用途 |
+|------|------|
+| `scripts/quick_start.bat` | **一键启动** - 创建项目并后台执行 |
+| `scripts/run_background.bat/.sh` | 后台执行任务 |
+| `scripts/monitor.bat/.sh` | 日志监控 |
+
+### 核心脚本
+
 | 脚本 | 用途 |
 |------|------|
 | `scripts/start_research.py` | 启动新研究项目 |
-| `scripts/prometheus.py` | 系统控制器 |
+| `scripts/prometheus.py` | 系统控制器（状态/检查点） |
 | `scripts/automation/task_executor.py` | 任务执行器 |
+
+### 工具脚本
+
+| 脚本 | 用途 |
+|------|------|
 | `scripts/Core/tools/arxiv_search.py` | arXiv 搜索 |
 | `scripts/Core/tools/semantic_scholar_search.py` | Semantic Scholar 搜索 |
 | `scripts/Core/tools/paper_downloader.py` | 论文下载 |
@@ -37,6 +52,51 @@ description: |
 **依赖安装**：
 ```bash
 pip install -r scripts/requirements.txt
+```
+
+## 后台执行工作流（推荐）
+
+### 1. 启动研究
+```powershell
+# Windows
+call scripts\quick_start.bat "研究主题"
+
+# Linux/Mac
+./scripts/quick_start.sh "研究主题"
+```
+
+### 2. 后台执行
+```powershell
+# Windows
+call scripts\run_background.bat
+
+# Linux/Mac
+./scripts/run_background.sh
+```
+
+### 3. 监控进度
+```powershell
+# Windows - 实时日志
+Get-Content Logs\executor_*.log -Wait -Tail 50
+
+# 或使用监控脚本
+call scripts\monitor.bat
+
+# Linux/Mac
+./scripts/monitor.sh
+```
+
+### 4. 查看状态
+```bash
+python scripts/prometheus.py --status
+```
+
+### 日志文件位置
+```
+Logs/
+├── executor_20260319_120000.log   # 执行日志
+├── workflow.log                    # 工作流日志
+└── error_trace.log                 # 错误追踪
 ```
 
 ## 核心原则

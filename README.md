@@ -12,9 +12,9 @@
 |------|------|
 | **10阶段工作流** | 从主题分析到论文提交的完整流程 |
 | **100个任务** | 细粒度的研究任务分解 |
-| **独立运行** | 不依赖外部代码，纯 prompt 驱动 |
+| **后台执行** | 任务后台运行，通过日志监控进度 |
 | **状态持久化** | 支持中断恢复 |
-| **模板支持** | 论文、实验报告、文献综述模板 |
+| **完整工具集** | 文献搜索、统计分析、LaTeX编译等 |
 
 ## 快速安装
 
@@ -40,6 +40,8 @@ git clone https://github.com/xingxingxingxin/prometheus-research-skill.git .clau
 
 ## 使用方法
 
+### 方式一：Claude Code 对话（推荐）
+
 在 Claude Code 中，直接说：
 
 ```
@@ -50,6 +52,42 @@ git clone https://github.com/xingxingxingxin/prometheus-research-skill.git .clau
 
 ```
 继续研究
+```
+
+### 方式二：后台执行（独立运行）
+
+```powershell
+# Windows
+# 1. 启动研究
+python scripts/start_research.py --topic "研究主题"
+
+# 2. 后台执行
+call scripts/run_background.bat
+
+# 3. 监控进度
+call scripts/monitor.bat
+# 或实时查看日志
+Get-Content Logs\executor_*.log -Wait -Tail 50
+```
+
+```bash
+# Linux/Mac
+# 1. 启动研究
+python scripts/start_research.py --topic "研究主题"
+
+# 2. 后台执行
+./scripts/run_background.sh
+
+# 3. 监控进度
+./scripts/monitor.sh
+# 或实时查看日志
+tail -f Logs/executor_*.log
+```
+
+### 查看状态
+
+```bash
+python scripts/prometheus.py --status
 ```
 
 就这么简单！
