@@ -1,0 +1,300 @@
+%%
+%% ACL 2025 LaTeX Template
+%% Template for Annual Meeting of the Association for Computational Linguistics
+%%
+
+\documentclass[11pt]{article}
+
+% ACL Packages
+\usepackage[2025]{acl}  % ACL style file (needs to be downloaded separately)
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{tikz}
+
+% For hyperlinks
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% Math operators
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% For linguistics notation
+\newcommand{\B}[1]{\textbf{#1}}
+\newcommand{\I}[1]{\textit{#1}}
+
+% Title
+\title{Your Paper Title Here}
+
+% Authors
+\author{First Author$^{1}$, Second Author$^{2}$, Third Author$^{1}$\\
+\\
+$^{1}$Department of Computer Science, University A\\
+$^{2}$Department of Linguistics, University B\\
+\\
+\texttt{\{first, third\}@university-a.edu}, \texttt{second@university-b.edu}
+}
+
+\begin{document}
+
+\maketitle
+
+% Abstract
+\begin{abstract}
+Your abstract should concisely summarize: (1) the problem addressed,
+(2) the proposed method/approach, (3) key results and findings, and
+(4) the significance of the contributions. Keep it under 200 words for ACL.
+\end{abstract}
+
+% Main content
+\section{Introduction}
+\label{sec:introduction}
+
+Introduce your NLP/CL problem and motivate your work:
+\begin{itemize}
+    \item What is the linguistic or computational challenge?
+    \item Why is it important for the field?
+    \item What limitations exist in current approaches?
+\end{itemize}
+
+State your contributions explicitly:
+
+\textbf{Contributions.} Our main contributions are:
+\begin{enumerate}
+    \item We propose [method] for [task], which [key innovation]
+    \item We create/release [dataset/resource] containing [statistics]
+    \item We demonstrate [quantitative results] on [benchmarks]
+\end{enumerate}
+
+\section{Related Work}
+\label{sec:related}
+
+Survey related work in multiple subareas:
+
+\paragraph{Task-specific Work.} Prior work on this task includes \cite{author2023paper}.
+
+\paragraph{Method-related Work.} Related methodological approaches \cite{method2022}.
+
+\paragraph{Datasets and Resources.} Existing resources for this task \cite{dataset2021}.
+
+\paragraph{Our Novelty.} How our work differs from and improves upon existing approaches.
+
+\section{Task Definition}
+\label{sec:task}
+
+Define the task formally. For NLP tasks, this typically includes:
+
+\subsection{Problem Formulation}
+
+Given an input sequence $X = (x_1, x_2, \ldots, x_n)$ where $x_i$ represents tokens,
+the task is to predict an output $Y$ which could be:
+\begin{itemize}
+    \item A sequence $Y = (y_1, y_2, \ldots, y_m)$ for sequence-to-sequence tasks
+    \item A label $y \in \mathcal{Y}$ for classification tasks
+    \item A structure (tree, graph) for structured prediction
+\end{itemize}
+
+\subsection{Challenges}
+
+Identify key challenges specific to this NLP task:
+\begin{itemize}
+    \item Challenge 1: e.g., long-range dependencies
+    \item Challenge 2: e.g., data scarcity
+    \item Challenge 3: e.g., linguistic ambiguity
+\end{itemize}
+
+\section{Method}
+\label{sec:method}
+
+\subsection{Overview}
+
+Describe your approach at a high level.
+
+\subsection{Model Architecture}
+
+Detail the model architecture. For neural models:
+
+\begin{equation}
+    h_i = \text{Encoder}(x_i, h_{i-1})
+\end{equation}
+
+\begin{equation}
+    P(y_t | y_{<t}, X) = \text{softmax}(W \cdot \text{Decoder}(h, y_{<t}))
+\end{equation}
+
+\subsection{Training Objective}
+
+Define the training objective:
+
+\begin{equation}
+    \mathcal{L}(\theta) = -\sum_{(X,Y) \in \mathcal{D}} \log P_\theta(Y|X)
+\end{equation}
+
+\subsection{Key Components}
+
+Describe key components of your approach:
+
+\paragraph{Component 1.} Describe the first key component.
+
+\paragraph{Component 2.} Describe the second key component.
+
+\subsection{Inference}
+
+Describe the inference/decoding procedure.
+
+\section{Data}
+\label{sec:data}
+
+\subsection{Datasets}
+
+Describe the datasets used:
+
+\begin{table}[t]
+    \centering
+    \caption{Dataset statistics.}
+    \label{tab:datasets}
+    \begin{tabular}{lrrr}
+        \toprule
+        Dataset & Train & Dev & Test \\
+        \midrule
+        Dataset 1 & 50,000 & 5,000 & 5,000 \\
+        Dataset 2 & 30,000 & 3,000 & 3,000 \\
+        Dataset 3 & 100,000 & 10,000 & 10,000 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Preprocessing}
+
+Describe preprocessing steps (tokenization, normalization, etc.).
+
+\subsection{Annotation}
+
+If you created a new dataset, describe the annotation process.
+
+\section{Experiments}
+\label{sec:experiments}
+
+\subsection{Experimental Setup}
+
+\paragraph{Baselines.} List baseline systems:
+\begin{itemize}
+    \item \textbf{Baseline 1} \cite{ref1}: Brief description
+    \item \textbf{Baseline 2} \cite{ref2}: Brief description
+\end{itemize}
+
+\paragraph{Metrics.} Define evaluation metrics:
+\begin{itemize}
+    \item \textbf{BLEU}: For machine translation
+    \item \textbf{F1}: For sequence labeling
+    \item \textbf{Accuracy}: For classification
+\end{itemize}
+
+\paragraph{Implementation Details.} Hyperparameters, hardware, training time.
+
+\subsection{Main Results}
+
+\begin{table*}[t]
+    \centering
+    \caption{Main results on benchmark datasets. Best results in \textbf{bold}.}
+    \label{tab:main_results}
+    \begin{tabular}{lcccccc}
+        \toprule
+        & \multicolumn{3}{c}{\textbf{Dataset 1}} & \multicolumn{3}{c}{\textbf{Dataset 2}} \\
+        \cmidrule(lr){2-4} \cmidrule(lr){5-7}
+        \textbf{Model} & Acc & F1 & BLEU & Acc & F1 & BLEU \\
+        \midrule
+        Baseline 1 & 85.2 & 0.84 & 32.1 & 83.5 & 0.82 & 30.5 \\
+        Baseline 2 & 87.3 & 0.86 & 34.5 & 85.2 & 0.84 & 32.8 \\
+        \textbf{Ours} & \textbf{91.5} & \textbf{0.90} & \textbf{38.2} & \textbf{89.8} & \textbf{0.88} & \textbf{36.1} \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+
+\subsection{Analysis}
+
+\paragraph{Ablation Study.} Analyze contribution of each component.
+
+\paragraph{Error Analysis.} Discuss common error patterns.
+
+\paragraph{Qualitative Examples.} Show example outputs.
+
+\begin{table}[t]
+    \centering
+    \caption{Example outputs from our model.}
+    \label{tab:examples}
+    \begin{tabular}{lp{5cm}}
+        \toprule
+        \textbf{Input} & [Example input text] \\
+        \midrule
+        \textbf{Gold} & [Ground truth output] \\
+        \textbf{Pred} & [Model prediction] \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{Findings.} Summarize key insights from experiments.
+
+\paragraph{Limitations.} Acknowledge limitations:
+\begin{itemize}
+    \item Limitation 1
+    \item Limitation 2
+\end{itemize}
+
+\paragraph{Ethical Considerations.} Discuss any ethical implications for NLP work.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Summarize contributions and suggest future directions.
+
+\section*{Acknowledgments}
+
+Thank reviewers, annotators, and funding sources.
+
+\section*{Limitations}
+
+ACL requires a limitations section. Discuss:
+\begin{itemize}
+    \item Computational requirements
+    \item Dataset/language coverage
+    \item Edge cases where the method fails
+\end{itemize}
+
+% Bibliography
+\bibliographystyle{acl_natbib}
+\bibliography{references}
+
+% Appendix
+\appendix
+
+\section{Additional Implementation Details}
+\label{app:implementation}
+
+Full hyperparameters, code availability, and additional details.
+
+\section{Additional Examples}
+\label{app:examples}
+
+More example outputs and analysis.
+
+\end{document}

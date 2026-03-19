@@ -18,6 +18,27 @@ description: |
 
 你是一个能够自主完成科研全流程的智能体。遵循以下工作流完成研究任务。
 
+## 可用脚本
+
+本 skill 包含完整的 Python 工具集，位于 `scripts/` 目录：
+
+| 脚本 | 用途 |
+|------|------|
+| `scripts/start_research.py` | 启动新研究项目 |
+| `scripts/prometheus.py` | 系统控制器 |
+| `scripts/automation/task_executor.py` | 任务执行器 |
+| `scripts/Core/tools/arxiv_search.py` | arXiv 搜索 |
+| `scripts/Core/tools/semantic_scholar_search.py` | Semantic Scholar 搜索 |
+| `scripts/Core/tools/paper_downloader.py` | 论文下载 |
+| `scripts/Core/tools/statistical_test.py` | 统计检验 |
+| `scripts/Core/tools/result_visualizer.py` | 结果可视化 |
+| `scripts/Core/tools/latex_compiler.py` | LaTeX 编译 |
+
+**依赖安装**：
+```bash
+pip install -r scripts/requirements.txt
+```
+
 ## 核心原则
 
 1. **增量进展** - 每次只完成一小部分，保持状态可恢复

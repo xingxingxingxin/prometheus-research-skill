@@ -1,0 +1,271 @@
+%%
+%% NeurIPS 2025 LaTeX Template
+%% Template for Conference on Neural Information Processing Systems submissions
+%%
+
+\documentclass{article}
+
+% NeurIPS Packages
+\usepackage{neurips_2025}  % NeurIPS style file (needs to be downloaded separately)
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{xcolor}
+\usepackage{subcaption}
+
+% For hyperlinks
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% Math operators
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% Title
+\title{Your Paper Title Here}
+
+% Authors
+\author{%
+  First Author\thanks{Equal contribution.} \And
+  Second Author \And
+  Third Author \\
+  \texttt{first.author@university.edu} \\
+  \texttt{second.author@university.edu} \\
+  \texttt{third.author@university.edu} \\
+  \\
+  Department of Computer Science\\
+  University Name\\
+}
+
+\begin{document}
+
+\maketitle
+
+% Abstract
+\begin{abstract}
+Your abstract should briefly summarize the main contributions of your paper.
+Keep it concise (typically 150-250 words). Cover: problem, approach, results, implications.
+Avoid citations and complex mathematical notation here.
+\end{abstract}
+
+% Main content
+\section{Introduction}
+\label{sec:introduction}
+
+Introduce the problem you address and motivate your work:
+\begin{itemize}
+    \item What is the challenge?
+    \item Why is it important?
+    \item What gap does your work fill?
+\end{itemize}
+
+State your contributions clearly:
+
+\begin{enumerate}
+    \item We propose a novel method for [problem/task]
+    \item We provide theoretical analysis showing [key insight]
+    \item We demonstrate empirically that our method achieves [results]
+\end{enumerate}
+
+\section{Related Work}
+\label{sec:related}
+
+Survey relevant prior work and position your contribution:
+\begin{itemize}
+    \item Category 1 of related work \citep{author2024paper}
+    \item Category 2 of related work
+    \item How your work differs from existing approaches
+\end{itemize}
+
+\section{Background}
+\label{sec:background}
+
+\subsection{Problem Setup}
+
+Define the problem formally. Let $\mathcal{X} \subset \mathbb{R}^d$ be the input space
+and $\mathcal{Y}$ be the label space. Given training data
+$\mathcal{D} = \{(x_i, y_i)\}_{i=1}^n$, we aim to learn a mapping
+$f_\theta: \mathcal{X} \rightarrow \mathcal{Y}$.
+
+\subsection{Notation}
+
+Use consistent notation throughout:
+\begin{itemize}
+    \item $x \in \mathcal{X}$: input
+    \item $y \in \mathcal{Y}$: output/label
+    \item $\theta$: model parameters
+    \item $\mathcal{L}$: loss function
+\end{itemize}
+
+\section{Method}
+\label{sec:method}
+
+\subsection{Overview}
+
+Describe your approach at a high level.
+
+\subsection{Proposed Approach}
+
+Detail the technical contributions:
+
+\textbf{Key Idea 1.} Describe the first key insight.
+
+\textbf{Key Idea 2.} Describe the second key insight.
+
+\subsection{Objective Function}
+
+Define your objective:
+
+\begin{equation}
+    \min_{\theta} \mathcal{L}(\theta) = \mathbb{E}_{(x,y) \sim \mathcal{D}}
+    \left[ \ell(f_\theta(x), y) \right] + \lambda R(\theta)
+    \label{eq:objective}
+\end{equation}
+
+where $\ell$ is the task loss, $R(\theta)$ is a regularization term,
+and $\lambda > 0$ is a hyperparameter.
+
+\subsection{Optimization}
+
+\begin{algorithm}[tb]
+   \caption{Proposed Algorithm}
+   \label{alg:algorithm}
+\begin{algorithmic}
+   \STATE \textbf{Input:} Data $\mathcal{D}$, learning rate $\eta$, iterations $T$
+   \STATE \textbf{Initialize:} $\theta_0$
+   \FOR{$t = 1$ to $T$}
+       \STATE Sample batch $\mathcal{B} \sim \mathcal{D}$
+       \STATE Compute loss: $L_t = \frac{1}{|\mathcal{B}|}\sum_{(x,y)\in\mathcal{B}} \ell(f_\theta(x), y)$
+       \STATE Update: $\theta_{t+1} = \theta_t - \eta \nabla_\theta L_t$
+   \ENDFOR
+   \STATE \textbf{Return:} $\theta_T$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Theoretical Analysis}
+
+If applicable, include theoretical results:
+
+\begin{theorem}
+\label{thm:main}
+Under conditions [A1-A3], Algorithm~\ref{alg:algorithm} converges to a
+stationary point at rate $O(1/\sqrt{T})$.
+\end{theorem}
+
+\begin{proof}
+(Proof sketch or reference to appendix)
+\end{proof}
+
+\section{Experiments}
+\label{sec:experiments}
+
+\subsection{Experimental Setup}
+
+\textbf{Datasets.} Describe datasets used:
+\begin{itemize}
+    \item Dataset 1: Description and statistics
+    \item Dataset 2: Description and statistics
+\end{itemize}
+
+\textbf{Baselines.} Compare against:
+\begin{itemize}
+    \item Baseline method 1 \citep{ref1}
+    \item Baseline method 2 \citep{ref2}
+\end{itemize}
+
+\textbf{Implementation.} Hyperparameters and training details.
+
+\subsection{Main Results}
+
+Present quantitative results in tables:
+
+\begin{table}[t]
+    \centering
+    \caption{Main results on benchmark datasets.}
+    \label{tab:results}
+    \begin{tabular}{lccc}
+        \toprule
+        Method & Metric 1 & Metric 2 & Metric 3 \\
+        \midrule
+        Baseline 1 & 85.2 & 0.84 & 92.1 \\
+        Baseline 2 & 87.3 & 0.86 & 93.5 \\
+        \textbf{Ours} & \textbf{91.5} & \textbf{0.90} & \textbf{96.2} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Ablation Study}
+
+Analyze the contribution of each component:
+
+\begin{table}[t]
+    \centering
+    \caption{Ablation study results.}
+    \label{tab:ablation}
+    \begin{tabular}{lc}
+        \toprule
+        Variant & Performance \\
+        \midrule
+        Full model & 91.5 \\
+        w/o component 1 & 88.2 \\
+        w/o component 2 & 89.7 \\
+        w/o component 3 & 90.1 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Analysis}
+
+Discuss results, failure cases, and insights.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Summarize key contributions and future directions.
+
+\paragraph{Limitations.} Acknowledge limitations of your approach.
+
+\paragraph{Future Work.} Suggest extensions and improvements.
+
+\paragraph{Broader Impact.} Discuss societal implications if relevant.
+
+\section*{Acknowledgments}
+
+Thank funding agencies, collaborators, and reviewers.
+
+\paragraph{Funding Disclosure} This work was supported by [grants].
+
+% Bibliography
+\bibliographystyle{plain}
+\bibliography{references}
+
+% Appendix
+\appendix
+
+\section{Proof of Theorem~\ref{thm:main}}
+\label{app:proof}
+
+Provide detailed proofs here.
+
+\section{Additional Experimental Details}
+\label{app:experiments}
+
+Include:
+\begin{itemize}
+    \item Full hyperparameter tables
+    \item Additional results and visualizations
+    \item Implementation details
+\end{itemize}
+
+\end{document}

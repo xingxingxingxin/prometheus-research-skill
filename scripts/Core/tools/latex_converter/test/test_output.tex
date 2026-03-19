@@ -1,0 +1,45 @@
+\section{Test Paper: Adaptive Trust Calibration}\label{sec:test_paper__adaptive_trust_calibration}
+
+\subsection{Abstract}
+
+This paper presents a novel approach to adaptive trust calibration in human-AI collaborative decision-making systems.
+
+\subsection{1. Introduction}
+
+Trust calibration is essential for effective human-AI collaboration. Previous work has shown that \textbf{overtrust} and \textbf{undertrust} can significantly impact system performance.
+
+\subsubsection{1.1 Research Questions}
+\begin{itemize}
+\item How can we dynamically adjust interface strategies?
+\item What features indicate user trust state?
+\end{itemize}
+
+\subsection{2. Method}
+
+Our approach uses a five-dimensional strategy space:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\toprule
+Dimension & Levels & Description \\
+\midrule
+Automation (L) & 1-5 & Level of AI autonomy \\
+Explanation (E) & 1-4 & Depth of explanations \\
+Density (D) & 1-4 & Information density \\
+\bottomrule
+\end{tabular}
+\end{table}
+The trust estimation formula is:
+
+\begin{equation}BTI = \sum_{i=1}^{n} w_i \cdot f_i\end{equation}
+
+where $w_i$ is the weight for feature $i$ and $f_i$ is the normalized feature value.
+
+\subsection{3. Experiments}
+
+We conducted experiments with 120 participants. Results show our method achieves 15% improvement in trust calibration accuracy.
+
+\subsection{4. Conclusion}
+
+We presented an adaptive trust calibration system that dynamically adjusts interface strategies based on user behavior.

@@ -1,0 +1,2 @@
+# This file ensures the sections directory is tracked by Git
+# You can split your paper into multiple .tex files and include them with \input{}

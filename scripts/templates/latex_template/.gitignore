@@ -1,0 +1,79 @@
+# LaTeX auxiliary files
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+# BibTeX
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+# Build folders
+build/
+output/
+*.pdf
+
+# Latexmk
+*.fdb_latexmk
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# Algorithms
+*.alg
+*.loa
+
+# Glossary
+*.acn
+*.acr
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.lzo
+
+# Hyperref
+*.brf
+
+# Knitr
+*-concordance.tex
+*.tikz
+*-tikzDictionary
+
+# Listings
+*.lol
+
+# References
+*.out
+
+# Sympy
+*.sout
+*.sympy
+sympy-plots-for-*.tex/
+
+# xcolor
+*.xcp
+
+# Web and cloud storage (don't sync these)
+.~*
+*.zip
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

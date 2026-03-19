@@ -1,0 +1,61 @@
+{
+  "name": "latex-paper",
+  "version": "1.0.0",
+  "description": "Convert Markdown research papers to LaTeX format for academic publication",
+  "author": "Project Prometheus",
+  "tags": ["latex", "paper", "markdown", "conversion", "academic"],
+  "commands": {
+    "convert": {
+      "description": "Convert Markdown to LaTeX",
+      "parameters": {
+        "input": {
+          "type": "string",
+          "description": "Input Markdown file or directory",
+          "required": true
+        },
+        "output": {
+          "type": "string",
+          "description": "Output LaTeX file or directory",
+          "required": true
+        },
+        "template": {
+          "type": "string",
+          "description": "Target conference template",
+          "enum": ["neurips", "icml", "acl", "aaai", "iclr"],
+          "default": "neurips"
+        }
+      }
+    },
+    "compile": {
+      "description": "Compile LaTeX to PDF",
+      "parameters": {
+        "main_tex": {
+          "type": "string",
+          "description": "Path to main.tex file",
+          "required": true
+        },
+        "engine": {
+          "type": "string",
+          "description": "LaTeX engine to use",
+          "enum": ["pdflatex", "xelatex", "lualatex"],
+          "default": "xelatex"
+        }
+      }
+    },
+    "check": {
+      "description": "Run quality checks on LaTeX project",
+      "parameters": {
+        "project_dir": {
+          "type": "string",
+          "description": "LaTeX project directory",
+          "required": true
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "python": ">=3.8",
+    "packages": ["pypandoc", "pylatex"],
+    "external": ["pandoc", "latex"]
+  }
+}

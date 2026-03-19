@@ -1,0 +1,531 @@
+{
+  "version": "1.0.0",
+  "description": "Default Gene library for GEP (Genome Evolution Protocol)",
+  "genes": [
+    {
+      "id": "gene_syntax_fix",
+      "name": "Syntax Error Repair",
+      "category": "repair",
+      "signals_match": [
+        "error_type:SyntaxError",
+        "error_type:IndentationError",
+        "keyword:unexpected",
+        "keyword:invalid_syntax"
+      ],
+      "strategy": [
+        {
+          "step": 1,
+          "action": "parse_error_line",
+          "description": "Extract line number and column from error message"
+        },
+        {
+          "step": 2,
+          "action": "read_context",
+          "description": "Read the file with surrounding context (5 lines before/after)"
+        },
+        {
+          "step": 3,
+          "action": "identify_issue",
+          "description": "Identify the specific syntax issue (missing bracket, colon, quote, etc.)"
+        },
+        {
+          "step": 4,
+          "action": "apply_fix",
+          "description": "Apply minimal fix to resolve the syntax error"
+        },
+        {
+          "step": 5,
+          "action": "validate",
+          "description": "Run syntax check to verify fix"
+        }
+      ],
+      "constraints": {
+        "max_changes": 3,
+        "preserve_indentation": true,
+        "scope": "single_line"
+      },
+      "validation_cmd": "python -m py_compile {file_path}",
+      "description": "Fixes Python syntax errors including missing brackets, colons, quotes, and indentation issues.",
+      "priority": 90,
+      "success_rate": 0.95,
+      "tags": ["syntax", "python", "quick-fix"]
+    },
+    {
+      "id": "gene_import_fix",
+      "name": "Import Error Repair",
+      "category": "repair",
+      "signals_match": [
+        "error_type:ImportError",
+        "error_type:ModuleNotFoundError",
+        "keyword:No_module_named",
+        "keyword:cannot_import"
+      ],
+      "strategy": [
+        {
+          "step": 1,
+          "action": "extract_module_name",
+          "description": "Parse the module name from the error message"
+        },
+        {
+          "step": 2,
+          "action": "check_installation",
+          "description": "Check if module is installed via pip list or requirements.txt"
+        },
+        {
+          "step": 3,
+          "action": "determine_fix_type",
+          "description": "Determine if it's a missing package, wrong import path, or typo"
+        },
+        {
+          "step": 4,
+          "action": "apply_fix",
+          "description": "Either install package, correct import path, or fix typo"
+        },
+        {
+          "step": 5,
+          "action": "validate",
+          "description": "Re-run import to verify fix"
+        }
+      ],
+      "constraints": {
+        "auto_install": true,
+        "check_requirements": true,
+        "safe_packages_only": true
+      },
+      "validation_cmd": "python -c \"import {module_name}\"",
+      "description": "Resolves import errors by installing missing packages, correcting import paths, or fixing typos.",
+      "priority": 85,
+      "success_rate": 0.90,
+      "tags": ["import", "dependency", "python"]
+    },
+    {
+      "id": "gene_type_fix",
+      "name": "Type Error Repair",
+      "category": "repair",
+      "signals_match": [
+        "error_type:TypeError",
+        "error_type:AttributeError",
+        "keyword:unsupported_operand",
+        "keyword:not_callable",
+        "keyword:NoneType"
+      ],
+      "strategy": [
+        {
+          "step": 1,
+          "action": "analyze_traceback",
+          "description": "Extract variable types and operation from traceback"
+        },
+        {
+          "step": 2,
+          "action": "identify_mismatch",
+          "description": "Identify the type mismatch or None value"
+        },
+        {
+          "step": 3,
+          "action": "determine_fix",
+          "description": "Determine appropriate type conversion or null check"
+        },
+        {
+          "step": 4,
+          "action": "apply_fix",
+          "description": "Add type conversion, null check, or correct attribute access"
+        },
+        {
+          "step": 5,
+          "action": "validate",
+          "description": "Run the failing code path to verify fix"
+        }
+      ],
+      "constraints": {
+        "preserve_logic": true,
+        "add_null_checks": true,
+        "explicit_conversions": true
+      },
+      "validation_cmd": "python {file_path}",
+      "description": "Fixes type errors by adding type conversions, null checks, or correcting attribute access patterns.",
+      "priority": 80,
+      "success_rate": 0.85,
+      "tags": ["type", "attribute", "python"]
+    },
+    {
+      "id": "gene_key_fix",
+      "name": "Key Error Repair",
+      "category": "repair",
+      "signals_match": [
+        "error_type:KeyError",
+        "keyword:key_not_found",
+        "keyword:missing_key"
+      ],
+      "strategy": [
+        {
+          "step": 1,
+          "action": "extract_key",
+          "description": "Extract the missing key from error message"
+        },
+        {
+          "step": 2,
+          "action": "analyze_dict_context",
+          "description": "Analyze the dictionary and expected keys"
+        },
+        {
+          "step": 3,
+          "action": "determine_fix_type",
+          "description": "Determine if it's a typo, missing data, or logic error"
+        },
+        {
+          "step": 4,
+          "action": "apply_fix",
+          "description": "Fix typo, add default value, or use .get() method"
+        },
+        {
+          "step": 5,
+          "action": "validate",
+          "description": "Run the failing code path to verify fix"
+        }
+      ],
+      "constraints": {
+        "use_get_method": true,
+        "add_default_values": true,
+        "check_data_source": true
+      },
+      "validation_cmd": "python {file_path}",
+      "description": "Fixes key errors by adding safe dictionary access patterns with defaults.",
+      "priority": 75,
+      "success_rate": 0.88,
+      "tags": ["key", "dictionary", "python"]
+    },
+    {
+      "id": "gene_file_fix",
+      "name": "File Error Repair",
+      "category": "repair",
+      "signals_match": [
+        "error_type:FileNotFoundError",
+        "error_type:PermissionError",
+        "keyword:No_such_file",
+        "keyword:Permission_denied"
+      ],
+      "strategy": [
+        {
+          "step": 1,
+          "action": "extract_path",
+          "description": "Extract the file path from error message"
+        },
+        {
+          "step": 2,
+          "action": "check_path_exists",
+          "description": "Verify if path exists and check alternatives"
+        },
+        {
+          "step": 3,
+          "action": "determine_fix_type",
+          "description": "Determine if it's a typo, missing dir, or permission issue"
+        },
+        {
+          "step": 4,
+          "action": "apply_fix",
+          "description": "Fix path, create directory, or adjust permissions"
+        },
+        {
+          "step": 5,
+          "action": "validate",
+          "description": "Re-run file operation to verify fix"
+        }
+      ],
+      "constraints": {
+        "create_missing_dirs": true,
+        "use_relative_paths": false,
+        "check_permissions": true
+      },
+      "validation_cmd": "python -c \"open('{file_path}').close()\"",
+      "description": "Resolves file errors by fixing paths, creating directories, or addressing permission issues.",
+      "priority": 70,
+      "success_rate": 0.85,
+      "tags": ["file", "path", "io"]
+    },
+    {
+      "id": "gene_value_fix",
+      "name": "Value Error Repair",
+      "category": "repair",
+      "signals_match": [
+        "error_type:ValueError",
+        "keyword:invalid_value",
+        "keyword:could_not_convert"
+      ],
+      "strategy": [
+        {
+          "step": 1,
+          "action": "analyze_value",
+          "description": "Extract the problematic value from error message"
+        },
+        {
+          "step": 2,
+          "action": "identify_expected_format",
+          "description": "Determine what format/value was expected"
+        },
+        {
+          "step": 3,
+          "action": "determine_fix",
+          "description": "Determine if validation, conversion, or default is needed"
+        },
+        {
+          "step": 4,
+          "action": "apply_fix",
+          "description": "Add validation, conversion, or handle edge cases"
+        },
+        {
+          "step": 5,
+          "action": "validate",
+          "description": "Test with edge cases to verify fix"
+        }
+      ],
+      "constraints": {
+        "add_validation": true,
+        "handle_edge_cases": true,
+        "preserve_original_logic": true
+      },
+      "validation_cmd": "python {file_path}",
+      "description": "Fixes value errors by adding input validation and handling edge cases.",
+      "priority": 75,
+      "success_rate": 0.82,
+      "tags": ["value", "validation", "python"]
+    },
+    {
+      "id": "gene_index_fix",
+      "name": "Index Error Repair",
+      "category": "repair",
+      "signals_match": [
+        "error_type:IndexError",
+        "error_type:StopIteration",
+        "keyword:index_out_of_range",
+        "keyword:list_index"
+      ],
+      "strategy": [
+        {
+          "step": 1,
+          "action": "extract_index",
+          "description": "Extract the index and list length from error message"
+        },
+        {
+          "step": 2,
+          "action": "analyze_bounds",
+          "description": "Analyze why index is out of bounds"
+        },
+        {
+          "step": 3,
+          "action": "determine_fix",
+          "description": "Determine if bounds check, loop fix, or data fix is needed"
+        },
+        {
+          "step": 4,
+          "action": "apply_fix",
+          "description": "Add bounds checking, fix loop conditions, or adjust data"
+        },
+        {
+          "step": 5,
+          "action": "validate",
+          "description": "Test with various list sizes to verify fix"
+        }
+      ],
+      "constraints": {
+        "add_bounds_check": true,
+        "use_safe_slicing": true,
+        "handle_empty_lists": true
+      },
+      "validation_cmd": "python {file_path}",
+      "description": "Fixes index errors by adding bounds checking and safe list access patterns.",
+      "priority": 72,
+      "success_rate": 0.85,
+      "tags": ["index", "bounds", "list"]
+    },
+    {
+      "id": "gene_assertion_fix",
+      "name": "Assertion Error Repair",
+      "category": "repair",
+      "signals_match": [
+        "error_type:AssertionError",
+        "keyword:assertion_failed",
+        "keyword:assert"
+      ],
+      "strategy": [
+        {
+          "step": 1,
+          "action": "analyze_assertion",
+          "description": "Extract assertion condition and context"
+        },
+        {
+          "step": 2,
+          "action": "check_test_validity",
+          "description": "Determine if assertion is correct or code is wrong"
+        },
+        {
+          "step": 3,
+          "action": "determine_fix",
+          "description": "Fix either the code logic or adjust assertion"
+        },
+        {
+          "step": 4,
+          "action": "apply_fix",
+          "description": "Apply the determined fix"
+        },
+        {
+          "step": 5,
+          "action": "validate",
+          "description": "Run tests to verify fix"
+        }
+      ],
+      "constraints": {
+        "preserve_test_intent": true,
+        "check_related_tests": true,
+        "update_test_docs": false
+      },
+      "validation_cmd": "pytest {file_path} -v",
+      "description": "Fixes assertion errors by correcting code logic or adjusting test expectations.",
+      "priority": 65,
+      "success_rate": 0.75,
+      "tags": ["assertion", "test", "logic"]
+    },
+    {
+      "id": "gene_runtime_fix",
+      "name": "Runtime Error Repair",
+      "category": "repair",
+      "signals_match": [
+        "error_type:RuntimeError",
+        "error_type:RecursionError",
+        "keyword:maximum_recursion",
+        "keyword:runtime_error"
+      ],
+      "strategy": [
+        {
+          "step": 1,
+          "action": "analyze_runtime_error",
+          "description": "Parse error to understand runtime issue"
+        },
+        {
+          "step": 2,
+          "action": "identify_cause",
+          "description": "Identify root cause (recursion, state, etc.)"
+        },
+        {
+          "step": 3,
+          "action": "determine_fix",
+          "description": "Determine appropriate fix strategy"
+        },
+        {
+          "step": 4,
+          "action": "apply_fix",
+          "description": "Apply fix with careful consideration of side effects"
+        },
+        {
+          "step": 5,
+          "action": "validate",
+          "description": "Test thoroughly to verify fix"
+        }
+      ],
+      "constraints": {
+        "recursion_limit_check": true,
+        "preserve_state": true,
+        "careful_refactoring": true
+      },
+      "validation_cmd": "python {file_path}",
+      "description": "Fixes runtime errors including recursion issues and state problems.",
+      "priority": 60,
+      "success_rate": 0.70,
+      "tags": ["runtime", "recursion", "state"]
+    },
+    {
+      "id": "gene_refactor",
+      "name": "Code Refactoring",
+      "category": "optimize",
+      "signals_match": [
+        "error_type:PerformanceWarning",
+        "keyword:deprecated",
+        "keyword:inefficient",
+        "keyword:refactor"
+      ],
+      "strategy": [
+        {
+          "step": 1,
+          "action": "analyze_code",
+          "description": "Analyze code structure and identify improvement areas"
+        },
+        {
+          "step": 2,
+          "action": "identify_patterns",
+          "description": "Identify anti-patterns or deprecated usages"
+        },
+        {
+          "step": 3,
+          "action": "plan_refactor",
+          "description": "Plan refactoring steps with minimal disruption"
+        },
+        {
+          "step": 4,
+          "action": "apply_refactor",
+          "description": "Apply refactoring incrementally"
+        },
+        {
+          "step": 5,
+          "action": "validate",
+          "description": "Run tests to verify behavior preserved"
+        }
+      ],
+      "constraints": {
+        "preserve_behavior": true,
+        "run_tests": true,
+        "incremental": true
+      },
+      "validation_cmd": "pytest tests/ -v",
+      "description": "Refactors code to improve efficiency and maintainability while preserving behavior.",
+      "priority": 40,
+      "success_rate": 0.80,
+      "tags": ["refactor", "optimize", "maintainability"]
+    },
+    {
+      "id": "gene_add_feature",
+      "name": "Add New Feature",
+      "category": "innovate",
+      "signals_match": [
+        "error_type:FeatureRequest",
+        "keyword:new_feature",
+        "keyword:enhancement"
+      ],
+      "strategy": [
+        {
+          "step": 1,
+          "action": "understand_requirements",
+          "description": "Understand feature requirements and scope"
+        },
+        {
+          "step": 2,
+          "action": "design_interface",
+          "description": "Design interface and integration points"
+        },
+        {
+          "step": 3,
+          "action": "implement_core",
+          "description": "Implement core functionality"
+        },
+        {
+          "step": 4,
+          "action": "add_tests",
+          "description": "Add tests for new feature"
+        },
+        {
+          "step": 5,
+          "action": "validate",
+          "description": "Run full test suite and integration tests"
+        }
+      ],
+      "constraints": {
+        "follow_patterns": true,
+        "add_documentation": true,
+        "backward_compatible": true
+      },
+      "validation_cmd": "pytest tests/ -v",
+      "description": "Adds new features following existing code patterns and conventions.",
+      "priority": 30,
+      "success_rate": 0.75,
+      "tags": ["feature", "innovate", "new"]
+    }
+  ]
+}

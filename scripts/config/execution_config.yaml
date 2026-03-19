@@ -1,0 +1,80 @@
+# Project Prometheus - 执行配置
+# ============================================
+# 此配置文件控制任务执行器的行为
+
+# Ralph Loop 配置 (深度迭代)
+ralph:
+  enabled: true                    # 是否全局启用
+  max_iterations: 20               # 每个任务最大迭代次数
+  completion_promise: "TASK_COMPLETE"  # 完成承诺标签
+  iteration_timeout: 900           # 每次迭代超时(秒)
+  backoff_strategy: "exponential"  # 退避策略: linear, exponential, fixed
+  backoff_base: 2.0               # 退避基数
+  max_backoff: 60.0               # 最大退避时间(秒)
+  on_max_iterations: "checkpoint" # 达到最大迭代时: checkpoint, fail, continue
+
+  # 启用 Ralph Loop 的阶段
+  phases_enabled:
+    coding: true
+    execution: true
+    analysis: true
+    implementation: true
+    literature_review: false
+    writing: false
+    humanization: false
+    latex: false
+    review: false
+
+# GEP 配置 (基因进化协议/错误恢复)
+gep:
+  enabled: true                    # 是否启用错误恢复
+  gene_weight: 0.5                 # 基因匹配权重
+  capsule_weight: 0.3              # 胶囊历史权重
+  history_weight: 0.2              # 历史记录权重
+  min_confidence: 0.3              # 最小置信度阈值
+
+  # 自动记录成功修复
+  auto_record_success: true
+
+  # 胶囊存储
+  max_capsules: 1000              # 最大胶囊数量
+  capsule_expire_days: 90         # 胶囊过期天数
+
+# 执行配置
+execution:
+  timeout: 900                     # 单次调用超时(秒)
+  max_wait: 1800                   # 每个任务最大等待时间(秒)
+  check_interval: 10               # 状态检查间隔(秒)
+  max_retries: 3                   # 失败重试次数
+  retry_delay: 60                  # 重试间隔(秒)
+
+  # Claude Code 配置
+  claude_path: "auto"              # claude 命令路径 (auto=自动检测)
+  permission_mode: "bypassPermissions"
+
+# 日志配置
+logging:
+  level: "INFO"                    # 日志级别: DEBUG, INFO, WARN, ERROR
+  max_file_size: 10485760          # 最大日志文件大小 (10MB)
+  backup_count: 5                  # 备份文件数量
+  console_output: true             # 是否输出到控制台
+
+# Git 配置 (遵循 Conventional Commits 规范)
+git:
+  auto_commit: true                # 是否自动提交
+  conventional_commits: true       # 使用 Conventional Commits 格式
+  # 提交类型映射 (根据任务阶段自动选择)
+  # feat: 新功能/代码实现 (Phase 3: Coding)
+  # fix: Bug修复/评审修改 (Phase 9: Review)
+  # docs: 文档/文献/论文 (Phase 0-2, 6, 8)
+  # test: 测试/实验 (Phase 4: Execution)
+  # style: 格式化/人性化 (Phase 7: Humanization)
+  # analysis: 结果分析 (Phase 5: Analysis - 自定义类型)
+  # chore: 其他杂项
+
+# 通知配置 (可选)
+notification:
+  enabled: false
+  on_task_complete: false
+  on_all_complete: true
+  on_error: true

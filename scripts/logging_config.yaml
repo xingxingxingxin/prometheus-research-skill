@@ -1,0 +1,315 @@
+# Project Prometheus - Logging Configuration
+# ===========================================
+# Python logging module configuration for the Prometheus system.
+#
+# This configuration file defines logging behavior including:
+# - Log levels (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+# - Log formats for different outputs
+# - File rotation and retention
+# - Multiple log files for different purposes
+# - Console and file handlers
+#
+# Usage:
+#   import logging.config
+#   import yaml
+#
+#   with open('logging_config.yaml', 'r', encoding='utf-8') as f:
+#       config = yaml.safe_load(f)
+#       logging.config.dictConfig(config)
+#
+#   logger = logging.getLogger('prometheus')
+
+# ========================================
+# Version
+# ========================================
+version: 1
+
+# Disable existing loggers when applying this config
+disable_existing_loggers: false
+
+# ========================================
+# Formatters
+# ========================================
+formatters:
+  # Standard format for general logging
+  standard:
+    format: "[%(asctime)s] [%(levelname)-8s] [%(name)s] %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+
+  # Detailed format for debugging
+  detailed:
+    format: "[%(asctime)s] [%(levelname)-8s] [%(name)s] [%(filename)s:%(lineno)d] [%(funcName)s] %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+
+  # Simple format for console output
+  simple:
+    format: "[%(levelname)s] %(message)s"
+
+  # Colored format for console (requires colorlog or manual coloring)
+  colored:
+    format: "%(log_color)s[%(asctime)s] [%(levelname)-8s]%(reset)s [%(name)s] %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+
+  # JSON format for structured logging
+  json:
+    format: '{"timestamp": "%(asctime)s", "level": "%(levelname)s", "logger": "%(name)s", "message": "%(message)s", "module": "%(module)s", "function": "%(funcName)s", "line": %(lineno)d}'
+    datefmt: "%Y-%m-%dT%H:%M:%S"
+
+  # Error format with traceback info
+  error:
+    format: "[%(asctime)s] [%(levelname)-8s] [%(name)s]\n  File: %(pathname)s:%(lineno)d\n  Function: %(funcName)s\n  Message: %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+
+  # Performance log format
+  performance:
+    format: "[%(asctime)s] [PERF] %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+
+# ========================================
+# Filters
+# ========================================
+filters:
+  # Filter for errors only
+  errors_only:
+    class: logging.Filter
+    # Note: Custom filter class would need to be implemented
+    # This is a placeholder for filter configuration
+
+  # Filter for specific modules
+  api_filter:
+    class: logging.Filter
+    name: prometheus.api
+
+# ========================================
+# Handlers
+# ========================================
+handlers:
+  # Console handler for general output
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: standard
+    stream: ext://sys.stdout
+    filters: []
+
+  # Console handler for errors
+  console_error:
+    class: logging.StreamHandler
+    level: ERROR
+    formatter: error
+    stream: ext://sys.stderr
+    filters: []
+
+  # Main log file handler with rotation
+  main_file:
+    class: logging.handlers.RotatingFileHandler
+    level: DEBUG
+    formatter: detailed
+    filename: Logs/prometheus.log
+    maxBytes: 10485760  # 10 MB
+    backupCount: 5
+    encoding: utf-8
+    delay: false
+
+  # Daily rotating log file
+  daily_file:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    formatter: standard
+    filename: Logs/prometheus_daily.log
+    when: midnight
+    interval: 1
+    backupCount: 30
+    encoding: utf-8
+
+  # Error log file handler
+  error_file:
+    class: logging.handlers.RotatingFileHandler
+    level: ERROR
+    formatter: error
+    filename: Logs/error_trace.log
+    maxBytes: 10485760  # 10 MB
+    backupCount: 10
+    encoding: utf-8
+
+  # Operational log for workflow operations
+  operational_file:
+    class: logging.handlers.RotatingFileHandler
+    level: INFO
+    formatter: standard
+    filename: Logs/operational.log
+    maxBytes: 5242880  # 5 MB
+    backupCount: 5
+    encoding: utf-8
+
+  # API call log
+  api_file:
+    class: logging.handlers.RotatingFileHandler
+    level: DEBUG
+    formatter: detailed
+    filename: Logs/api_calls.log
+    maxBytes: 10485760  # 10 MB
+    backupCount: 10
+    encoding: utf-8
+
+  # Performance log
+  performance_file:
+    class: logging.handlers.RotatingFileHandler
+    level: INFO
+    formatter: performance
+    filename: Logs/performance.log
+    maxBytes: 5242880  # 5 MB
+    backupCount: 5
+    encoding: utf-8
+
+  # JSON structured log
+  json_file:
+    class: logging.handlers.RotatingFileHandler
+    level: INFO
+    formatter: json
+    filename: Logs/prometheus_structured.log
+    maxBytes: 10485760  # 10 MB
+    backupCount: 5
+    encoding: utf-8
+
+  # Null handler (discards all log records)
+  null:
+    class: logging.NullHandler
+
+# ========================================
+# Loggers
+# ========================================
+loggers:
+  # Main Prometheus logger
+  prometheus:
+    level: DEBUG
+    handlers: [console, main_file, daily_file]
+    propagate: false
+
+  # API communication logger
+  prometheus.api:
+    level: DEBUG
+    handlers: [api_file, console_error]
+    propagate: false
+
+  # Workflow operations logger
+  prometheus.workflow:
+    level: INFO
+    handlers: [operational_file]
+    propagate: true
+
+  # State management logger
+  prometheus.state:
+    level: INFO
+    handlers: [main_file]
+    propagate: true
+
+  # Task execution logger
+  prometheus.tasks:
+    level: INFO
+    handlers: [operational_file, main_file]
+    propagate: true
+
+  # Error tracking logger
+  prometheus.errors:
+    level: ERROR
+    handlers: [error_file, console_error]
+    propagate: false
+
+  # Performance monitoring logger
+  prometheus.performance:
+    level: INFO
+    handlers: [performance_file]
+    propagate: false
+
+  # Literature search logger
+  prometheus.literature:
+    level: INFO
+    handlers: [main_file, operational_file]
+    propagate: true
+
+  # Data analysis logger
+  prometheus.analysis:
+    level: INFO
+    handlers: [main_file]
+    propagate: true
+
+  # LaTeX compilation logger
+  prometheus.latex:
+    level: INFO
+    handlers: [main_file]
+    propagate: true
+
+  # Communication logger
+  prometheus.communication:
+    level: INFO
+    handlers: [operational_file]
+    propagate: true
+
+  # Checkpoint logger
+  prometheus.checkpoint:
+    level: INFO
+    handlers: [operational_file, main_file]
+    propagate: true
+
+  # Archive logger
+  prometheus.archive:
+    level: INFO
+    handlers: [main_file]
+    propagate: true
+
+  # Git operations logger
+  prometheus.git:
+    level: INFO
+    handlers: [operational_file]
+    propagate: true
+
+  # Structured logging logger
+  prometheus.structured:
+    level: INFO
+    handlers: [json_file]
+    propagate: false
+
+  # Third-party library loggers (reduce verbosity)
+  urllib3:
+    level: WARNING
+    handlers: [null]
+    propagate: false
+
+  requests:
+    level: WARNING
+    handlers: [null]
+    propagate: false
+
+  werkzeug:
+    level: WARNING
+    handlers: [null]
+    propagate: false
+
+  scholarly:
+    level: WARNING
+    handlers: [main_file]
+    propagate: false
+
+  arxiv:
+    level: WARNING
+    handlers: [main_file]
+    propagate: false
+
+  anthropic:
+    level: INFO
+    handlers: [api_file]
+    propagate: false
+
+# ========================================
+# Root Logger
+# ========================================
+root:
+  level: WARNING
+  handlers: [console, main_file]
+
+# ========================================
+# Incremental Configuration
+# ========================================
+# Set to true to allow incremental updates
+incremental: false

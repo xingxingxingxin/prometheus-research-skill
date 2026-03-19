@@ -1,0 +1,47 @@
+# Claude Agent SDK
+claude-agent-sdk>=0.0.25
+
+# 学术搜索
+arxiv>=1.4.0
+scholarly>=1.7.0
+semanticscholar>=0.4.0
+
+# 数据处理
+requests>=2.28.0
+beautifulsoup4>=4.12.0
+pypdf>=3.0.0
+
+# AI 接口
+anthropic>=0.18.0
+openai>=1.0.0  # 可选：OpenAI后端
+
+# 数据库
+# sqlite3 is built-in Python module, no need to install
+
+# RAG 向量数据库
+chromadb>=0.4.0  # 可选：向量存储
+sentence-transformers>=2.2.0  # 可选：本地嵌入
+faiss-cpu>=1.7.0  # 可选：FAISS向量索引
+
+# 可视化
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# 科学计算
+numpy>=1.24.0
+scipy>=1.10.0
+pandas>=2.0.0
+
+# 机器学习 (可选)
+# torch>=2.0.0
+# scikit-learn>=1.2.0
+
+# LaTeX 编译 (需要系统安装 pdflatex)
+# 在 Ubuntu: sudo apt-get install texlive-full
+# 在 macOS: brew install --cask mactex
+
+# 配置文件
+pyyaml>=6.0
+
+# 测试
+pytest>=7.0.0

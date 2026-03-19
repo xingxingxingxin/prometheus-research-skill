@@ -1,0 +1,228 @@
+%%
+%% ICML 2025 LaTeX Template
+%% Template for International Conference on Machine Learning submissions
+%%
+
+\documentclass{article}
+
+% ICML Packages
+\usepackage{icml2025}  % ICML style file (needs to be downloaded separately)
+\usepackage[T1]{fontenc}
+\usepackage{type1cm}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{xcolor}
+
+% For hyperlinks
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% Math operators
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% Title and authors
+\icmltitlerunning{Short Title for Running Header}
+
+\begin{document}
+
+\twocolumn[
+\icmltitle{Your Paper Title Here\\
+           With Possible Subtitle}
+
+\icmlsetsymbol{equal}{*}
+
+\begin{icmlauthorlist}
+\icmlauthor{First Author\icmlequal{} }{aff1,aff2}
+\icmlauthor{Second Author}{aff1}
+\icmlauthor{Third Author}{aff2}
+\end{icmlauthorlist}
+
+\icmlaffiliation{aff1}{Department of Computer Science, University A}
+\icmlaffiliation{aff2}{Department of Machine Learning, University B}
+
+\icmlcorrespondingauthor{First Author}{first.author@email.com}
+
+\icmlkeywords{Machine Learning, ICML, Template}
+
+\vskip 0.3in
+]
+
+\printAffiliationAndNotice{}  % leave blank if no need for equal contribution notice
+
+% Abstract
+\begin{abstract}
+Your abstract should briefly summarize the main contributions of your paper.
+It should be a concise paragraph (typically 150-250 words) that covers:
+the problem you address, your approach, key results, and implications.
+Do not include citations or mathematical notation in the abstract.
+\end{abstract}
+
+% Main content sections
+\section{Introduction}
+\label{sec:introduction}
+
+Introduce your problem and motivate your work. What is the challenge you address?
+Why is it important? What gap in existing research does your work fill?
+
+\subsection{Contributions}
+
+List your main contributions:
+\begin{itemize}
+    \item Contribution 1: Description of first contribution
+    \item Contribution 2: Description of second contribution
+    \item Contribution 3: Description of third contribution
+\end{itemize}
+
+\section{Related Work}
+\label{sec:related_work}
+
+Discuss relevant prior work. Position your work relative to existing approaches.
+Include citations to important papers in the field \citep{author2024paper}.
+
+\section{Preliminaries}
+\label{sec:preliminaries}
+
+Define the problem formally. Introduce necessary notation and background.
+
+\subsection{Problem Formulation}
+
+Let $\mathcal{X}$ be the input space and $\mathcal{Y}$ be the output space.
+Given a dataset $\mathcal{D} = \{(x_i, y_i)\}_{i=1}^{n}$, our goal is to learn
+a function $f_\theta: \mathcal{X} \rightarrow \mathcal{Y}$ parameterized by $\theta$.
+
+\subsection{Background Concepts}
+
+Explain key concepts that readers need to understand your approach.
+
+\section{Method}
+\label{sec:method}
+
+Describe your proposed approach in detail.
+
+\subsection{Overview}
+
+Provide a high-level overview of your method.
+
+\subsection{Detailed Algorithm}
+
+Present the technical details. Use equations where appropriate:
+
+\begin{equation}
+    \mathcal{L}(\theta) = \frac{1}{n} \sum_{i=1}^{n} \ell(f_\theta(x_i), y_i)
+    \label{eq:loss}
+\end{equation}
+
+where $\ell(\cdot, \cdot)$ is the loss function.
+
+\subsection{Algorithm}
+
+\begin{algorithm}[tb]
+   \caption{Algorithm Name}
+   \label{alg:main}
+\begin{algorithmic}
+   \STATE {\bfseries Input:} Dataset $\mathcal{D}$, hyperparameters $\eta$, $T$
+   \STATE {\bfseries Output:} Model parameters $\theta^*$
+   \STATE Initialize $\theta_0$
+   \FOR{$t = 1$ {\bfseries to} $T$}
+      \STATE Sample mini-batch $\mathcal{B} \subset \mathcal{D}$
+      \STATE Compute gradient: $g \leftarrow \nabla_\theta \mathcal{L}(\theta; \mathcal{B})$
+      \STATE Update parameters: $\theta \leftarrow \theta - \eta \cdot g$
+   \ENDFOR
+   \RETURN $\theta^* = \theta$
+\end{algorithmic}
+\end{algorithm}
+
+\section{Experiments}
+\label{sec:experiments}
+
+Describe your experimental setup and results.
+
+\subsection{Datasets}
+
+Describe the datasets used in your experiments.
+
+\subsection{Baselines}
+
+List and describe the baseline methods you compare against.
+
+\subsection{Implementation Details}
+
+Provide implementation details for reproducibility.
+
+\subsection{Results}
+
+Present your main results. Use tables and figures to illustrate findings.
+
+\begin{table}[t]
+    \caption{Comparison with baseline methods. Best results are in \textbf{bold}.}
+    \label{tab:main_results}
+    \vskip 0.15in
+    \begin{center}
+    \begin{small}
+    \begin{sc}
+    \begin{tabular}{lcc}
+        \toprule
+        Method & Accuracy & F1 Score \\
+        \midrule
+        Baseline 1 & 85.2 & 0.84 \\
+        Baseline 2 & 87.3 & 0.86 \\
+        Ours & \textbf{91.5} & \textbf{0.90} \\
+        \bottomrule
+    \end{tabular}
+    \end{sc}
+    \end{small}
+    \end{center}
+    \vskip -0.1in
+\end{table}
+
+\subsection{Ablation Studies}
+
+Analyze the contribution of different components of your method.
+
+\section{Analysis and Discussion}
+\label{sec:discussion}
+
+Discuss your findings, limitations, and broader implications.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Summarize your contributions and suggest directions for future work.
+
+% Acknowledgments
+\section*{Acknowledgments}
+
+This work was supported by [funding sources]. We thank [collaborators] for
+helpful discussions.
+
+% Bibliography
+\bibliographystyle{icml2025}
+\bibliography{references}
+
+% Appendix (if needed)
+\appendix
+\section{Additional Details}
+\label{app:details}
+
+Include additional details in the appendix, such as:
+\begin{itemize}
+    \item Detailed proofs
+    \item Additional experimental results
+    \item Hyperparameter sensitivity analysis
+\end{itemize}
+
+\end{document}

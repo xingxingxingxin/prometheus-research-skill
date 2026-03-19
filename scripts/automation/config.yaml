@@ -1,0 +1,57 @@
+# Project Prometheus - 自动化配置
+# ================================
+
+# 项目信息
+project_name: coherent_diffraction_color_imaging
+topic: "可见光相干光衍射成像实现彩色成像"
+created_at: "2026-03-09"
+
+# 执行设置
+settings:
+  # Claude Code 权限模式
+  # - accept-edit: 自动接受文件编辑
+  # - yolo: 自动接受所有操作（谨慎使用）
+  # - plan: 先规划再执行
+  permission_mode: accept-edit
+
+  # 执行限制
+  max_iterations: 100      # 最大迭代次数
+  timeout: 600             # 单次执行超时 (秒)
+  retry_count: 3           # 失败重试次数
+  retry_delay: 30          # 重试延迟 (秒)
+
+  # Git 设置
+  auto_commit: true        # 自动提交
+  commit_prefix: "完成"    # 提交消息前缀
+
+# 文件路径
+paths:
+  tasks_file: automation/tasks.md
+  log_file: automation/executor.log
+  state_file: automation/executor_state.json
+  prompts_dir: automation/prompts
+
+# 日志设置
+logging:
+  level: INFO              # DEBUG, INFO, WARNING, ERROR
+  console_output: true
+  file_output: true
+  max_file_size: 10485760  # 10MB
+
+# 研究设置
+research:
+  # 文献搜索
+  literature:
+    semantic_scholar: true
+    arxiv: true
+    max_results: 50
+
+  # 深度学习
+  deep_learning:
+    framework: pytorch     # pytorch, tensorflow
+    device: cuda           # cuda, cpu, auto
+
+  # 可视化
+  visualization:
+    format: png            # png, svg, pdf
+    dpi: 300

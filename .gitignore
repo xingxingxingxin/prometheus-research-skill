@@ -1,11 +1,51 @@
-# OS
-.DS_Store
-Thumbs.db
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
 
 # IDE
 .idea/
 .vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+Logs/
+
+# Project data (generated at runtime)
+Projects/
+Data/
+Checkpoints/
+Exports/
+
+# Cache
+.cache/
+.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db
 
 # Temporary
 *.tmp
 *.temp
+*.bak
+
+# Archives
+*.zip
+*.tar.gz
+*.7z
+
+# Environment
+.env
+*.key
