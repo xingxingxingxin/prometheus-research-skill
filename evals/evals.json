@@ -1,0 +1,92 @@
+{
+  "skill_name": "prometheus-research",
+  "description": "全自主科研智能体 - 自动完成从文献调研到论文撰写的完整研究流程",
+  "evals": [
+    {
+      "id": 1,
+      "name": "启动新研究项目",
+      "prompt": "启动一个关于\"基于强化学习的机器人路径规划\"的研究",
+      "expected_output": "创建项目目录结构，生成100个研究任务，开始执行T001",
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "Projects/基于强化学习的机器人路径规划/.prometheus/state.json",
+          "description": "状态文件应该被创建"
+        },
+        {
+          "type": "file_exists",
+          "path": "Projects/基于强化学习的机器人路径规划/.prometheus/research_tasks.json",
+          "description": "任务清单应该被创建"
+        },
+        {
+          "type": "json_field",
+          "path": "Projects/基于强化学习的机器人路径规划/.prometheus/state.json",
+          "field": "current_task",
+          "expected": "T001",
+          "description": "应该从T001开始"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "继续研究流程",
+      "prompt": "继续执行研究任务",
+      "expected_output": "读取状态文件，找到下一个待执行任务，继续执行",
+      "assertions": [
+        {
+          "type": "file_read",
+          "description": "应该读取state.json获取当前状态"
+        },
+        {
+          "type": "output_contains",
+          "pattern": "TASK_COMPLETE",
+          "description": "任务完成后应该输出完成标记"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "查询研究状态",
+      "prompt": "告诉我当前研究的进度",
+      "expected_output": "读取状态文件，展示当前阶段、已完成任务数、待完成任务数",
+      "assertions": [
+        {
+          "type": "output_contains",
+          "pattern": "Phase",
+          "description": "应该显示当前阶段"
+        },
+        {
+          "type": "output_contains",
+          "pattern": "T0",
+          "description": "应该显示当前任务ID"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "文献搜索任务",
+      "prompt": "帮我搜索\"transformer attention mechanism\"相关的学术论文",
+      "expected_output": "使用WebSearch搜索学术文献，整理结果并保存",
+      "assertions": [
+        {
+          "type": "output_contains",
+          "pattern": "论文",
+          "description": "应该返回论文相关内容"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "创建研究笔记",
+      "prompt": "帮我为这篇论文创建研读笔记",
+      "expected_output": "使用论文研读模板创建结构化笔记",
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path_pattern": "notes/paper_.*_summary.md",
+          "description": "应该创建论文研读笔记文件"
+        }
+      ]
+    }
+  ]
+}
