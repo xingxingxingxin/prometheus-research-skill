@@ -33,19 +33,19 @@ description: |
 ### 步骤 1：初始化项目
 
 ```bash
-python scripts/start_research.py --topic "研究主题"
+cd D:/auto-system/prometheus2 && python scripts/start_research.py --topic "研究主题"
 ```
 
 ### 步骤 2：启动后台执行
 
 **Windows:**
 ```bash
-mkdir -p Logs && start /b pythonw scripts/automation/task_executor.py --loop >> Logs/executor.log 2>&1
+cd D:/auto-system/prometheus2 && mkdir -p Logs && start /b pythonw scripts/automation/task_executor.py --loop >> Logs/executor.log 2>&1
 ```
 
 **Linux/Mac:**
 ```bash
-mkdir -p Logs && nohup python scripts/automation/task_executor.py --loop >> Logs/executor.log 2>&1 &
+cd D:/auto-system/prometheus2 && mkdir -p Logs && nohup python scripts/automation/task_executor.py --loop >> Logs/executor.log 2>&1 &
 ```
 
 ### 步骤 3：输出监控提示
@@ -53,9 +53,11 @@ mkdir -p Logs && nohup python scripts/automation/task_executor.py --loop >> Logs
 ```
 ✅ 研究已在后台启动
 
+📁 项目目录: D:/auto-system/prometheus2/Projects/项目名/
+📝 日志文件: D:/auto-system/prometheus2/Logs/executor.log
+
 查看进度：
-  Get-Content Logs\executor.log -Wait -Tail 50   (Windows)
-  tail -f Logs/executor.log                      (Linux/Mac)
+  Get-Content D:\auto-system\prometheus2\Logs\executor.log -Wait -Tail 50
 ```
 
 ---
@@ -67,11 +69,11 @@ mkdir -p Logs && nohup python scripts/automation/task_executor.py --loop >> Logs
 你应该执行：
 
 ```bash
-python scripts/start_research.py --topic "图神经网络社交推荐"
+cd D:/auto-system/prometheus2 && python scripts/start_research.py --topic "图神经网络社交推荐"
 ```
 
 ```bash
-mkdir -p Logs && start /b pythonw scripts/automation/task_executor.py --loop >> Logs/executor.log 2>&1
+cd D:/auto-system/prometheus2 && mkdir -p Logs && start /b pythonw scripts/automation/task_executor.py --loop >> Logs/executor.log 2>&1
 ```
 
 然后输出：
@@ -79,7 +81,7 @@ mkdir -p Logs && start /b pythonw scripts/automation/task_executor.py --loop >> 
 ✅ 研究已在后台启动
 
 查看进度：
-  Get-Content Logs\executor.log -Wait -Tail 50
+  Get-Content D:\auto-system\prometheus2\Logs\executor.log -Wait -Tail 50
 ```
 
 ---

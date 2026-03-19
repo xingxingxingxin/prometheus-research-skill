@@ -134,7 +134,11 @@ class TaskExecutor:
     """任务执行器 - 从 research_tasks.json 读取任务，集成 Ralph Loop"""
 
     def __init__(self, project_dir: str = None):
-        self.project_dir = Path(project_dir or os.getcwd())
+        # 默认使用脚本所在目录的 Projects/current 子目录
+        if project_dir is None:
+            script_root = Path(__file__).parent.parent.parent  # scripts/automation -> scripts -> root
+            project_dir = script_root / "Projects" / "current"
+        self.project_dir = Path(project_dir)
 
         # 加载配置
         self.config = DEFAULT_CONFIG.copy()
