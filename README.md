@@ -27,21 +27,23 @@
 
 ---
 
-## 工作方式
+## 工作原理
 
-**后台执行 + 日志监控**
+此 Skill 会在**后台**执行所有研究任务，用户通过日志监控进度。
 
 ```
-启动研究 → 后台运行 → 查看日志 → 完成输出
+用户说"启动研究" → Skill 启动后台进程 → 用户查看日志 → 完成输出
 ```
+
+**重要**: Skill 不会在对话中执行任务，而是启动独立的 Python 后台进程。
 
 ---
 
-## 在 Claude Code 中使用
+## 使用方法
 
-### 方法 1：直接触发（推荐）
+### 在 Claude Code 中使用
 
-只需对 Claude Code 说：
+只需说：
 
 ```
 启动研究 [你的研究主题]
@@ -52,61 +54,41 @@
 启动研究 基于图神经网络的社交推荐系统
 ```
 
-Claude Code 会自动：
-1. 运行 `start_research.py` 生成任务清单
-2. 启动后台执行
+Skill 会自动：
+1. 初始化项目结构
+2. 启动后台执行进程
 3. 告诉你如何监控进度
 
-### 方法 2：手动执行
+### 查看进度
 
-**步骤 1：初始化项目**
-```bash
-python scripts/start_research.py --topic "你的研究主题"
-```
-
-**步骤 2：启动后台执行**
-
-Windows:
 ```powershell
-call scripts\run_background.bat
-```
+# Windows PowerShell - 实时查看日志
+Get-Content Logs\executor.log -Wait -Tail 50
 
-Linux/Mac:
-```bash
-./scripts/run_background.sh
-```
-
-**步骤 3：监控进度**
-
-Windows PowerShell:
-```powershell
-# 实时查看日志
-Get-Content Logs\executor_*.log -Wait -Tail 50
-
-# 或使用监控菜单
-call scripts\monitor.bat
-```
-
-Linux/Mac:
-```bash
-# 实时查看日志
-tail -f Logs/executor_*.log
-
-# 或使用监控菜单
-./scripts/monitor.sh
+# Linux/Mac - 实时查看日志
+tail -f Logs/executor.log
 ```
 
 ---
 
-## 监控命令
+## 手动执行（可选）
 
-| 命令 | 说明 |
-|------|------|
-| `Get-Content Logs\executor_*.log -Wait -Tail 50` | 实时日志 (Windows) |
-| `tail -f Logs/executor_*.log` | 实时日志 (Linux/Mac) |
-| `call scripts\monitor.bat` | 监控菜单 (Windows) |
-| `./scripts/monitor.sh` | 监控菜单 (Linux/Mac) |
-| `python scripts/prometheus.py --status` | 查看状态 |
+如果需要手动控制：
+
+```bash
+# 1. 初始化项目
+python scripts/start_research.py --topic "你的研究主题"
+
+# 2. 启动后台执行 (Windows)
+start /b pythonw scripts/automation/task_executor.py --project "Projects/项目名" --loop >> Logs/executor.log 2>&1
+
+# 2. 启动后台执行 (Linux/Mac)
+nohup python scripts/automation/task_executor.py --project "Projects/项目名" --loop >> Logs/executor.log 2>&1 &
+
+# 3. 查看日志
+Get-Content Logs\executor.log -Wait -Tail 50   # Windows
+tail -f Logs/executor.log                      # Linux/Mac
+```
 
 ---
 
@@ -117,7 +99,7 @@ tail -f Logs/executor_*.log
 ```
 output/
 ├── paper_en.pdf        # 英文论文
-├── paper_zh.pdf        # 中文论文（可选）
+├── paper_zh.pdf        # 中文论文
 └── supplementary.zip   # 代码和数据
 ```
 
@@ -156,17 +138,12 @@ pip install -r scripts/requirements.txt
 prometheus-research-skill/
 ├── SKILL.md                    # Claude Code Skill 定义
 ├── README.md
-├── LICENSE
-├── AUTHORS
 ├── config/
 │   └── execution_config.yaml   # 执行配置
 ├── scripts/
 │   ├── start_research.py       # 启动研究
-│   ├── run_background.bat/.sh  # 后台执行
-│   ├── monitor.bat/.sh         # 日志监控
-│   ├── prometheus.py           # 系统控制器
-│   ├── automation/             # 自动化模块
-│   │   └── task_executor.py    # 任务执行器
+│   ├── automation/
+│   │   └── task_executor.py    # 后台任务执行器
 │   ├── Core/                   # 核心模块
 │   │   ├── prompts/            # 阶段提示词
 │   │   ├── gep/                # GEP 错误恢复
