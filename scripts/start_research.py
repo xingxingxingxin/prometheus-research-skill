@@ -30,8 +30,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-# 项目根目录
-PROJECT_ROOT = Path(__file__).parent.resolve()
+# 项目根目录 (scripts 的父目录)
+PROJECT_ROOT = Path(__file__).parent.parent.resolve()
 TASKS_FILE = PROJECT_ROOT / "Projects" / "current" / "research_tasks.json"
 STATE_FILE = PROJECT_ROOT / "Projects" / "current" / "state.json"
 
